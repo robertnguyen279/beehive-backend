@@ -1,7 +1,10 @@
-import { Document, model, Schema, Model } from 'mongoose';
+// @ts-nocheck
+
+import mongoose, { Document, model, Schema, Model } from 'mongoose';
 import validator from 'validator';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import jwt_decode from 'jwt-decode';
 export interface User {
   firstName: string;
   lastName: string;
@@ -11,6 +14,7 @@ export interface User {
   type: 'GoogleAuth' | 'FacebookAuth' | 'BeehiveAuth';
   birthday?: string;
   cart?: Array<string>;
+  token: Array<string>;
   purchaseHistory?: Array<string>;
 }
 
@@ -20,7 +24,8 @@ interface UserDocument extends User, Document {
 }
 
 interface UserModel extends Model<UserDocument> {
-  generateHashPassword(password: string): string;
+  generateHashPassword(password: string): Promise<string>;
+  findByToken(token: string): Promise<Model<UserDocument>>;
 }
 
 const UserSchema = new Schema(
@@ -77,13 +82,16 @@ const UserSchema = new Schema(
     purchaseHistory: {
       type: Array,
     },
-    friend: {
+    friends: {
       type: Array,
     },
     requestsReceived: {
       type: Array,
     },
     requestsSent: {
+      type: Array,
+    },
+    token: {
       type: Array,
     },
     groups: {
@@ -98,11 +106,27 @@ const UserSchema = new Schema(
 UserSchema.statics.generateHashPassword = async (password: string) =>
   bcrypt.hash(password, 8);
 
-UserSchema.methods.generateSessionToken = async function (this: UserDocument) {
-  return jwt.sign(
-    { userId: this._id, email: this.email },
-    process.env.JWT_SECRET,
-  );
+UserSchema.statics.findByToken = async (token: string) => {
+  const { email, type, userId } = jwt_decode(token);
+
+  if (type && type === 'BeehiveAuth') {
+    return await User.findOne({ _id: userId, token: { $in: token } }).select(
+      '-password -token',
+    );
+  }
 };
 
-export default model<UserDocument, UserModel>('User', UserSchema);
+UserSchema.methods.generateSessionToken = async function (this: UserDocument) {
+  const token = await jwt.sign(
+    { userId: this._id, email: this.email, type: 'BeehiveAuth' },
+    process.env.JWT_SECRET,
+  );
+
+  return (this.token = this.token.concat(token));
+};
+
+const User =
+  (mongoose.models.User as UserModel) ||
+  model<UserDocument, UserModel>('User', UserSchema);
+
+export default User;

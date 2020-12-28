@@ -5,3 +5,11 @@ createUser:
         method: POST
         path: /user
         cors: true
+
+readUser:
+  handler: src/handlers/users/readUser.handler
+  events:
+    - http:
+        method: GET
+        path: /user
+        cors: true

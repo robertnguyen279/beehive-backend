@@ -1,11 +1,23 @@
 import middy from '@middy/core';
-import httpJsonBodyParser from '@middy/http-json-body-parser';
 import httpEventNormalizer from '@middy/http-event-normalizer';
 import httpErrorHandler from '@middy/http-error-handler';
+import httpSecurityHeaders from '@middy/http-security-headers';
+import auth from './auth';
+import connectToDB from './dbConnect';
 
-export default (handler) =>
+export const commonMiddleware = (handler) =>
   middy(handler).use([
-    httpJsonBodyParser(),
-    httpEventNormalizer(),
     httpErrorHandler(),
+    httpEventNormalizer(),
+    httpSecurityHeaders(),
+    connectToDB(),
+  ]);
+
+export const authMiddleware = (handler) =>
+  middy(handler).use([
+    httpErrorHandler(),
+    httpEventNormalizer(),
+    httpSecurityHeaders(),
+    connectToDB(),
+    auth(),
   ]);
