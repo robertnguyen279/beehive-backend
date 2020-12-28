@@ -5,7 +5,7 @@ import User from '@src/models/User';
 import { commonMiddleware } from '@src/middlewares/middy';
 
 const createUser: APIGatewayProxyHandler = async (event) => {
-  let user = new User(JSON.parse(event.body));
+  const user = new User(JSON.parse(event.body));
 
   try {
     user.password = await User.generateHashPassword(user.password);
@@ -13,7 +13,7 @@ const createUser: APIGatewayProxyHandler = async (event) => {
     const doc = await user.save();
     doc.password = undefined;
     doc.token = undefined;
-
+    console.log('ok');
     return {
       statusCode: 200,
       body: JSON.stringify({ user: doc, token }),
