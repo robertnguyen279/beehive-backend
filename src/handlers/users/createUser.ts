@@ -4,21 +4,19 @@ import connectToDatabase from '@src/services/mongoose';
 import createError from 'http-errors';
 import User from '@src/models/User';
 import commonMiddleware from '@src/middlewares/middy';
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 const createUser: APIGatewayProxyHandler = async (event, context) => {
   context.callbackWaitsForEmptyEventLoop = false;
   await connectToDatabase();
-  console.log(event.body);
-  const user = new User(event.body);
+  let user = new User(event.body);
 
   try {
+    user.password = await User.generateHashPassword(user.password);
+    const token = await user.generateSessionToken();
     const doc = await user.save();
     return {
       statusCode: 200,
-      body: JSON.stringify(doc),
+      body: JSON.stringify({ user: doc, token }),
     };
   } catch (error) {
     throw new createError.InternalServerError(JSON.stringify(error));

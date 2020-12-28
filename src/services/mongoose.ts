@@ -14,6 +14,7 @@ const connectToDatabase = (): Promise<any> => {
     .connect(process.env.MONGO_URL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      useCreateIndex: true,
     })
     .then((db) => {
       isConnected = db.connections[0].readyState;

@@ -30,6 +30,7 @@ provider:
     NODE_ENV: ${self:provider.stage}
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
     MONGO_URL: ${file(config/env.yml):MONGO_URL}
+    JWT_SECRET: ${file(config/env.yml):JWT_SECRET}
   tracing:
     lambda: true
     apiGateway: true
@@ -41,17 +42,4 @@ provider:
       Resource: '*'
 
 functions:
-  createUser:
-    handler: src/handlers/users/createUser.handler
-    events:
-      - http:
-          method: POST
-          path: /user
-          cors: true
-  hello:
-    handler: src/handlers/hello.handler
-    events:
-      - http:
-          method: GET
-          path: /hello
-          cors: true
+  - ${file(functionsYML/users.yml)}
