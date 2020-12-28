@@ -13,7 +13,7 @@ const createUser: APIGatewayProxyHandler = async (event) => {
     const doc = await user.save();
     doc.password = undefined;
     doc.token = undefined;
-    console.log('ok');
+
     return {
       statusCode: 200,
       body: JSON.stringify({ user: doc, token }),
