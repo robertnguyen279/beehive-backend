@@ -11,6 +11,7 @@ const authMiddleware = () => ({
 
     const token = handler.event.headers.Authorization.split(' ')[1];
     return User.findByToken(token).then((user) => {
+      console.log(user);
       if (!user) {
         throw new createError.Unauthorized(
           JSON.stringify({ error: 'You are unauthorized.' }),

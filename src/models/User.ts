@@ -129,7 +129,9 @@ UserSchema.methods.generateSessionToken = async function (
     process.env.JWT_SECRET,
   );
 
-  return (this.token = this.token.concat(sessionToken));
+  this.token = this.token.concat(sessionToken);
+  await this.save();
+  return sessionToken;
 };
 
 const User =

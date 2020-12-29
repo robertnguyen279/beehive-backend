@@ -73,10 +73,8 @@
   "author": "The serverless webpack authors (https://github.com/elastic-coders/serverless-webpack)",
   "license": "MIT",
   "lint-staged": {
-    "**/*": [
-      "prettier --write --ignore-unknown",
-      "npm run lint"
-    ]
+    "**/*": "prettier --write --ignore-unknown",
+    "*.{ts,js}": "eslint --cache --fix"
   },
   "husky": {
     "hooks": {

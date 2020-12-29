@@ -13,3 +13,11 @@ readUser:
         method: GET
         path: /user
         cors: true
+
+loginUser:
+  handler: src/handlers/users/loginUser.handler
+  events:
+    - http:
+        method: POST
+        path: /login
+        cors: true
