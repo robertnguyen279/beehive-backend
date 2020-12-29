@@ -1,0 +1,23 @@
+createUser:
+  handler: src/handlers/users/createUser.handler
+  events:
+    - http:
+        method: POST
+        path: /user
+        cors: true
+
+readUser:
+  handler: src/handlers/users/readUser.handler
+  events:
+    - http:
+        method: GET
+        path: /user
+        cors: true
+
+loginUser:
+  handler: src/handlers/users/loginUser.handler
+  events:
+    - http:
+        method: POST
+        path: /login
+        cors: true
