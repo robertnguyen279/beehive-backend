@@ -16,6 +16,13 @@
     "linebreak-style": 0,
     "no-console": 0,
     "@typescript-eslint/no-explicit-any": 0,
+    "no-param-reassign": 0,
+    "import/extensions": 0,
+    "@typescript-eslint/ban-ts-comment": 0,
+    "import/no-named-as-default": 0,
+    "func-names": 0,
+    "no-return-assign": 0,
+    "no-unused-expressions": 0,
     "max-len": [
       "error",
       {

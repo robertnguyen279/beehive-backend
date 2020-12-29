@@ -1,10 +1,9 @@
-// @ts-nocheck
-
 import mongoose, { Document, model, Schema, Model } from 'mongoose';
 import validator from 'validator';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import jwt_decode from 'jwt-decode';
+import jwtDecode from 'jwt-decode';
+
 export interface User {
   firstName: string;
   lastName: string;
@@ -106,23 +105,31 @@ const UserSchema = new Schema(
 UserSchema.statics.generateHashPassword = async (password: string) =>
   bcrypt.hash(password, 8);
 
-UserSchema.statics.findByToken = async (token: string) => {
-  const { email, type, userId } = jwt_decode(token);
+interface Token {
+  userId?: string;
+  email: string;
+  type?: string;
+}
 
-  if (type && type === 'BeehiveAuth') {
-    return await User.findOne({ _id: userId, token: { $in: token } }).select(
-      '-password -token',
-    );
-  }
+UserSchema.statics.findByToken = async (token: string) => {
+  const { email }: Token = jwtDecode(token);
+
+  return User.findOne({
+    email,
+    // @ts-ignore
+    token: { $in: token },
+  }).select('-password -token');
 };
 
-UserSchema.methods.generateSessionToken = async function (this: UserDocument) {
-  const token = await jwt.sign(
-    { userId: this._id, email: this.email, type: 'BeehiveAuth' },
+UserSchema.methods.generateSessionToken = async function (
+  this: UserDocument,
+): Promise<any> {
+  const sessionToken = await jwt.sign(
+    { userId: this.id, email: this.email, type: 'BeehiveAuth' },
     process.env.JWT_SECRET,
   );
 
-  return (this.token = this.token.concat(token));
+  return (this.token = this.token.concat(sessionToken));
 };
 
 const User =
