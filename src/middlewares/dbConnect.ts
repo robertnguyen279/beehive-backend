@@ -1,6 +1,6 @@
 import connectToDatabase from '@src/services/mongoose';
 
-const dbConnection = () => ({
+const dbConnection = (): any => ({
   before: (handler, next) => {
     handler.context.callbackWaitsForEmptyEventLoop = false;
     connectToDatabase().then(next());
