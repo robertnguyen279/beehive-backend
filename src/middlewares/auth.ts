@@ -1,7 +1,7 @@
 import createError from 'http-errors';
 import User from '@src/models/User';
 
-const authMiddleware = () => ({
+const authMiddleware = (): any => ({
   before: (handler, next) => {
     if (!handler.event.headers.Authorization) {
       throw new createError.Unauthorized(
