@@ -29,3 +29,11 @@ loginByGoogle:
         method: POST
         path: /loginByGoogle
         cors: true
+
+loginByFacebook:
+  handler: src/handlers/users/loginByFacebook.handler
+  events:
+    - http:
+        method: POST
+        path: /loginByFacebook
+        cors: true

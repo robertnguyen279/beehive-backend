@@ -110,14 +110,16 @@ UserSchema.statics.generateHashPassword = async (password: string) =>
 
 interface Token {
   email: string;
+  userId: string;
 }
 
 UserSchema.statics.findByToken = async (token: string) => {
-  const { email }: Token = jwtDecode(token);
+  const { email, userId }: Token = jwtDecode(token);
 
   return User.findOne({
     email,
-    // @ts-ignore
+    _id: userId,
+    // @ts-ignore,
     token: { $in: token },
   }).select('-password -token');
 };
