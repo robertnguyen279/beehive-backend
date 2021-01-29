@@ -6,8 +6,9 @@ import { commonMiddleware } from '@src/middlewares/middy';
 
 const createUser: APIGatewayProxyHandler = async (event) => {
   const user = new User(JSON.parse(event.body));
-
   try {
+    if (!user.password)
+      throw new createError.InternalServerError('Password must be provided.');
     user.password = await User.generateHashPassword(user.password);
     const token = await user.generateSessionToken();
     const doc = await user.save();

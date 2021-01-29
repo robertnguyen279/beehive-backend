@@ -21,3 +21,11 @@ loginUser:
         method: POST
         path: /login
         cors: true
+
+loginByGoogle:
+  handler: src/handlers/users/loginByGoogle.handler
+  events:
+    - http:
+        method: POST
+        path: /loginByGoogle
+        cors: true

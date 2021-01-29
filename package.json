@@ -20,7 +20,6 @@
     "@middy/core": "^1.5.0",
     "@middy/http-error-handler": "^1.5.0",
     "@middy/http-event-normalizer": "^1.5.0",
-    "@middy/http-json-body-parser": "^1.5.0",
     "@middy/http-security-headers": "^1.5.0",
     "@types/mongoose": "^5.10.3",
     "@types/validator": "^13.1.2",

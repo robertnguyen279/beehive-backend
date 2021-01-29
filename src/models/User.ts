@@ -8,13 +8,16 @@ export interface User {
   firstName: string;
   lastName: string;
   email: string;
-  password: string;
+  password?: string;
   genders?: 'Male' | 'Female';
   type: 'GoogleAuth' | 'FacebookAuth' | 'BeehiveAuth';
   birthday?: string;
   cart?: Array<string>;
   token: Array<string>;
   purchaseHistory?: Array<string>;
+  friends: Array<string>;
+  reqestsReceived?: Array<string>;
+  requestsReceived?: Array<string>;
 }
 
 interface UserDocument extends User, Document {
@@ -31,12 +34,10 @@ const UserSchema = new Schema(
   {
     firstName: {
       type: String,
-      required: true,
       trim: true,
     },
     lastName: {
       type: String,
-      required: true,
       trim: true,
     },
     email: {
@@ -50,7 +51,6 @@ const UserSchema = new Schema(
     },
     password: {
       type: String,
-      required: true,
       validate: (value: string) => {
         if (/\s/.test(value))
           throw new Error('Password cannot contain whitespace.');
@@ -61,6 +61,9 @@ const UserSchema = new Schema(
     genders: {
       type: String,
       enum: ['Male', 'Female'],
+    },
+    avatar: {
+      type: String,
     },
     roles: {
       type: Number,
@@ -73,7 +76,7 @@ const UserSchema = new Schema(
       default: 'BeehiveAuth',
     },
     birthday: {
-      type: String,
+      type: Date,
     },
     cart: {
       type: Array,
@@ -106,9 +109,7 @@ UserSchema.statics.generateHashPassword = async (password: string) =>
   bcrypt.hash(password, 8);
 
 interface Token {
-  userId?: string;
   email: string;
-  type?: string;
 }
 
 UserSchema.statics.findByToken = async (token: string) => {

@@ -8,17 +8,6 @@ import bcrypt from 'bcryptjs';
 const loginUser: APIGatewayProxyHandler = async (event) => {
   const { email, password } = JSON.parse(event.body);
 
-  if (
-    !email ||
-    typeof email !== 'string' ||
-    !password ||
-    typeof password !== 'string'
-  ) {
-    throw new createError.InternalServerError(
-      JSON.stringify({ error: 'Invalid parameters.' }),
-    );
-  }
-
   try {
     const user = await User.findOne({ email });
 
