@@ -5,7 +5,7 @@ const authMiddleware = (): any => ({
   before: (handler, next) => {
     if (!handler.event.headers.Authorization) {
       throw new createError.Unauthorized(
-        JSON.stringify({ error: 'You are unauthorized.' }),
+        JSON.stringify('You are unauthorized.'),
       );
     }
 
@@ -13,7 +13,7 @@ const authMiddleware = (): any => ({
     return User.findByToken(token).then((user) => {
       if (!user) {
         throw new createError.Unauthorized(
-          JSON.stringify({ error: 'You are unauthorized.' }),
+          JSON.stringify('You are unauthorized.'),
         );
       }
 

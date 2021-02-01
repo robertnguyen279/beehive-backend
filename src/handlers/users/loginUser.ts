@@ -13,12 +13,12 @@ const loginUser: APIGatewayProxyHandler = async (event) => {
 
     if (!user)
       throw new createError.InternalServerError(
-        JSON.stringify({ error: 'User not found.' }),
+        JSON.stringify('User not found.'),
       );
 
-    if (!bcrypt.compareSync(password, user.password)) {
+    if (!user.password || !bcrypt.compareSync(password, user.password)) {
       throw new createError.InternalServerError(
-        JSON.stringify({ error: 'Incorrect password.' }),
+        JSON.stringify('Incorrect password.'),
       );
     }
 
