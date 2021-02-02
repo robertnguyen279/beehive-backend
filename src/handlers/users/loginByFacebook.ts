@@ -24,7 +24,7 @@ const loginByFacebook: APIGatewayProxyHandler = async (event) => {
 
       return {
         statusCode: 200,
-        body: JSON.stringify({ newUser, token }),
+        body: JSON.stringify({ user: newUser, token }),
       };
     }
 
@@ -34,10 +34,6 @@ const loginByFacebook: APIGatewayProxyHandler = async (event) => {
 
     return {
       statusCode: 200,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true,
-      },
       body: JSON.stringify({ user, token }),
     };
   } catch (error) {

@@ -1455,6 +1455,11 @@
   dependencies:
     once "^1.4.0"
 
+"@middy/http-cors@^2.0.0-alpha.4":
+  version "2.0.0-alpha.4"
+  resolved "https://registry.yarnpkg.com/@middy/http-cors/-/http-cors-2.0.0-alpha.4.tgz#96715a2aff37dc9e4750407c404628ce802e6606"
+  integrity sha512-IsNwD9o7x1w+rMQn9NbIZNsqMbpF/CWX/Nw+hGEAmxtOujracDFAGY3RdLosS08AD5uThhX9Q6Bmv0MFiVzRrQ==
+
 "@middy/http-error-handler@^1.5.0":
   version "1.5.2"
   resolved "https://registry.yarnpkg.com/@middy/http-error-handler/-/http-error-handler-1.5.2.tgz#7893ca1b1e958b3da5057e4a1ebde63df44c325c"

@@ -18,6 +18,7 @@
     "@dazn/lambda-powertools-sns-client": "^1.28.1",
     "@dazn/lambda-powertools-sqs-client": "^1.28.1",
     "@middy/core": "^1.5.0",
+    "@middy/http-cors": "^2.0.0-alpha.4",
     "@middy/http-error-handler": "^1.5.0",
     "@middy/http-event-normalizer": "^1.5.0",
     "@middy/http-security-headers": "^1.5.0",
