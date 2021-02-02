@@ -18,7 +18,7 @@ const loginByFacebook: APIGatewayProxyHandler = async (event) => {
         accountType: 'FacebookAuth',
       });
       const token = await newUser.generateSessionToken();
-      newUser.save();
+      await newUser.save();
       newUser.password = undefined;
       newUser.token = undefined;
 

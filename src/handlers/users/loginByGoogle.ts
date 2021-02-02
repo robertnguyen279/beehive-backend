@@ -34,7 +34,7 @@ const loginByGoogle: APIGatewayProxyHandler = async (event) => {
         accountType: 'GoogleAuth',
       });
       const token = await newUser.generateSessionToken();
-      newUser.save();
+      await newUser.save();
       newUser.password = undefined;
       newUser.token = undefined;
 
