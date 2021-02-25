@@ -1529,6 +1529,11 @@
   dependencies:
     defer-to-connect "^1.0.1"
 
+"@types/aws-lambda@^8.10.19":
+  version "8.10.72"
+  resolved "https://registry.yarnpkg.com/@types/aws-lambda/-/aws-lambda-8.10.72.tgz#af2a6eeaf39be9674e3856f1870d9d15cf75e2e0"
+  integrity sha512-jOrTwAhSiUtBIN/QsWNKlI4+4aDtpZ0sr2BRvKW6XQZdspgHUSHPcuzxbzCRiHUiDQ+0026u5TSE38VyIhNnfA==
+
 "@types/aws-lambda@^8.10.64":
   version "8.10.71"
   resolved "https://registry.yarnpkg.com/@types/aws-lambda/-/aws-lambda-8.10.71.tgz#ab3084038411ce42f63b975e67aafb163f3aa353"
@@ -2165,6 +2170,13 @@ aws-lambda@^1.0.6:
     commander "^3.0.2"
     js-yaml "^3.13.1"
     watchpack "^2.0.0-beta.10"
+
+aws-multipart-parser@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/aws-multipart-parser/-/aws-multipart-parser-0.2.1.tgz#9ab1dec5e089cdcc2fb6886cd45dddd2b2c78249"
+  integrity sha512-/IAOWk0jn+vxu6s0NhLA+en86usGYBj4VCBvTIbrOuL2wHcMKVuV5Zgxc1z4tFk/XSMj5ucIALiACoqglT8LWw==
+  dependencies:
+    "@types/aws-lambda" "^8.10.19"
 
 aws-sdk@*, aws-sdk@^2.540.0, aws-sdk@^2.624.0, aws-sdk@^2.804.0, aws-sdk@^2.817.0:
   version "2.833.0"

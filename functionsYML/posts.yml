@@ -1,0 +1,7 @@
+createPost:
+  handler: src/handlers/posts/createPost.handler
+  events:
+    - http:
+        method: POST
+        path: /post
+        cors: true

@@ -10,6 +10,9 @@ custom:
   prune: # automatically prune old lambda versions
     automatic: true
     number: 3
+  apigwBinary:
+    types:
+      - 'multipart/form-data'
 
 plugins:
   - serverless-offline
@@ -39,7 +42,10 @@ provider:
       Action:
         - xray:PutTraceSegments
         - xray:PutTelemetryRecords
+        - 's3:GetObject'
+        - 's3:PutObject'
       Resource: '*'
 
 functions:
   - ${file(functionsYML/users.yml)}
+  - ${file(functionsYML/posts.yml)}

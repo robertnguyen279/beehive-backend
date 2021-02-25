@@ -8,9 +8,8 @@ const authMiddleware = (): any => ({
         JSON.stringify('You are unauthorized.'),
       );
     }
-
     const token = handler.event.headers.Authorization.split(' ')[1];
-    return User.findByToken(token).then((user) => {
+    User.findByToken(token).then((user) => {
       if (!user) {
         throw new createError.Unauthorized(
           JSON.stringify('You are unauthorized.'),
