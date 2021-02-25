@@ -9,6 +9,7 @@ const createUser: APIGatewayProxyHandler = async (event) => {
   try {
     if (!user.password)
       throw new createError.InternalServerError('Password must be provided.');
+
     user.password = await User.generateHashPassword(user.password);
     const token = await user.generateSessionToken();
     const doc = await user.save();

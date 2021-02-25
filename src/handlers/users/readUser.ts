@@ -4,6 +4,7 @@ import { authMiddleware } from '@src/middlewares/middy';
 
 const readUser: APIGatewayProxyHandler = async (event) => {
   const { authUser } = JSON.parse(event.body);
+  console.log(authUser.fullName);
   return {
     statusCode: 200,
     body: JSON.stringify(authUser),

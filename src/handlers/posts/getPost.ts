@@ -20,7 +20,7 @@ const updatePost: APIGatewayProxyHandler = async (event) => {
       .populate({
         path: 'likes',
         model: User,
-        select: 'fullName',
+        select: 'firstName lastName',
       })
       .populate({
         path: 'comments',
