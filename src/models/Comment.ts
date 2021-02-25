@@ -17,14 +17,18 @@ const CommentSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'User',
     },
-    comments: {
-      type: [Schema.Types.ObjectId],
-      ref: 'Comment',
-    },
-    likes: {
-      type: [Schema.Types.ObjectId],
-      ref: 'User',
-    },
+    comments: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Comment',
+      },
+    ],
+    likes: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+      },
+    ],
   },
   {
     timestamps: true,
@@ -32,7 +36,7 @@ const CommentSchema = new Schema(
 );
 
 const Comment =
-  (mongoose.models.Post as Model<Document<Comment>>) ||
+  (mongoose.models.Comment as Model<Document<Comment>>) ||
   model<Document<Comment>, Model<Document<Comment>>>('Comment', CommentSchema);
 
 export default Comment;

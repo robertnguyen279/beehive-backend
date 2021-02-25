@@ -5,3 +5,17 @@ createPost:
         method: POST
         path: /post
         cors: true
+updatePost:
+  handler: src/handlers/posts/updatePost.handler
+  events:
+    - http:
+        method: PUT
+        path: /post/{id}
+        cors: true
+getPost:
+  handler: src/handlers/posts/getPost.handler
+  events:
+    - http:
+        method: GET
+        path: /post/{id}
+        cors: true

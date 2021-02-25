@@ -108,6 +108,9 @@ const UserSchema = new Schema(
 UserSchema.statics.generateHashPassword = async (password: string) =>
   bcrypt.hash(password, 8);
 
+UserSchema.virtual('fullName').get(function () {
+  return `${this.firstName} ${this.lastName}`;
+});
 interface Token {
   email: string;
   userId: string;

@@ -19,18 +19,24 @@ const PostSchema = new Schema(
       ref: 'User',
       required: true,
     },
-    medias: {
-      type: [Schema.Types.ObjectId],
-      ref: 'Media',
-    },
-    comments: {
-      type: [Schema.Types.ObjectId],
-      ref: 'Comment',
-    },
-    likes: {
-      type: [Schema.Types.ObjectId],
-      ref: 'User',
-    },
+    medias: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Media',
+      },
+    ],
+    comments: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Comment',
+      },
+    ],
+    likes: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+      },
+    ],
   },
   {
     timestamps: true,

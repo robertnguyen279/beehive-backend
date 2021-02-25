@@ -31,14 +31,18 @@ const MediaSchema = new Schema(
       ref: 'User',
       required: true,
     },
-    comments: {
-      type: [Schema.Types.ObjectId],
-      ref: 'Comment',
-    },
-    likes: {
-      type: [Schema.Types.ObjectId],
-      ref: 'User',
-    },
+    comments: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Comment',
+      },
+    ],
+    likes: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+      },
+    ],
   },
   {
     timestamps: true,
@@ -46,7 +50,7 @@ const MediaSchema = new Schema(
 );
 
 const Media =
-  (mongoose.models.Post as Model<Document<Media>>) ||
+  (mongoose.models.Media as Model<Document<Media>>) ||
   model<Document<Media>, Model<Document<Media>>>('Media', MediaSchema);
 
 export default Media;
