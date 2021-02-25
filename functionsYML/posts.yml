@@ -19,3 +19,10 @@ getPost:
         method: GET
         path: /post/{id}
         cors: true
+getPosts:
+  handler: src/handlers/posts/getPosts.handler
+  events:
+    - http:
+        method: GET
+        path: /posts
+        cors: true

@@ -1,6 +1,6 @@
 import { APIGatewayProxyHandler } from 'aws-lambda';
 import 'source-map-support/register';
-// import createError from 'http-errors';
+import createError from 'http-errors';
 import { authMiddleware } from '@src/middlewares/middy';
 import Media from '@src/models/Media';
 import Post from '@src/models/Post';
@@ -29,14 +29,20 @@ const createPost: APIGatewayProxyHandler = async (event) => {
   if (medias) {
     await Promise.all(
       medias.map(async (media) => {
-        const newMedia = new Media({
-          postBy: authUser._id,
-          name: media.name,
-          url: media.url,
-          type: media.type,
-        });
-        const mediaDoc = await newMedia.save();
-        postParams.medias.push(mediaDoc._id);
+        try {
+          const newMedia = new Media({
+            postBy: authUser._id,
+            name: media.name,
+            url: media.url,
+            type: media.type,
+          });
+          const mediaDoc = await newMedia.save();
+          postParams.medias.push(mediaDoc._id);
+        } catch (error) {
+          throw new createError.InternalServerError(
+            JSON.stringify({ message: error }),
+          );
+        }
       }),
     );
   }

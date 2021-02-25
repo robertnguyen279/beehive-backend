@@ -7,11 +7,18 @@ import Media from '@src/models/Media';
 import User from '@src/models/User';
 import Comment from '@src/models/Comment';
 
-const getPost: APIGatewayProxyHandler = async (event) => {
-  const { id } = event.pathParameters;
+const getPosts: APIGatewayProxyHandler = async (event) => {
+  const skip = event.queryStringParameters.skip
+    ? parseInt(event.queryStringParameters.skip)
+    : 0;
+  const limit = event.queryStringParameters.limit
+    ? parseInt(event.queryStringParameters.limit)
+    : 10;
 
   try {
-    const post = await Post.findById(id)
+    const posts = await Post.find()
+      .skip(skip)
+      .limit(limit)
       .populate({
         path: 'medias',
         model: Media,
@@ -27,8 +34,7 @@ const getPost: APIGatewayProxyHandler = async (event) => {
         model: Comment,
         select: 'content',
       });
-
-    if (!post) {
+    if (!posts) {
       throw new createError.InternalServerError(
         JSON.stringify({ message: 'Cannot find post.' }),
       );
@@ -37,7 +43,7 @@ const getPost: APIGatewayProxyHandler = async (event) => {
     return {
       statusCode: 200,
       body: JSON.stringify({
-        post,
+        posts,
       }),
     };
   } catch (error) {
@@ -47,4 +53,4 @@ const getPost: APIGatewayProxyHandler = async (event) => {
   }
 };
 
-export const handler = authMiddleware(getPost);
+export const handler = authMiddleware(getPosts);
