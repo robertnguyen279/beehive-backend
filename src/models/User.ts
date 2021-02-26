@@ -85,15 +85,24 @@ const UserSchema = new Schema(
     purchaseHistory: {
       type: Array,
     },
-    friends: {
-      type: Array,
-    },
-    requestsReceived: {
-      type: Array,
-    },
-    requestsSent: {
-      type: Array,
-    },
+    friends: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+      },
+    ],
+    requestsReceived: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+      },
+    ],
+    requestsSent: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+      },
+    ],
     token: {
       type: Array,
     },
@@ -122,7 +131,23 @@ UserSchema.statics.findByToken = async (token: string) => {
     _id: userId,
     // @ts-ignore,
     token: { $in: token },
-  }).select('-password -token');
+  })
+    .populate({
+      path: 'requestsReceived',
+      model: 'User',
+      select: 'firstName lastName avatar',
+    })
+    .populate({
+      path: 'requestsSent',
+      model: 'User',
+      select: 'firstName lastName avatar',
+    })
+    .populate({
+      path: 'friends',
+      model: 'User',
+      select: 'firstName lastName avatar',
+    })
+    .select('-password -token');
 };
 
 UserSchema.methods.generateSessionToken = async function (

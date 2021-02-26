@@ -37,3 +37,27 @@ loginByFacebook:
         method: POST
         path: /loginByFacebook
         cors: true
+
+sendFriendRequest:
+  handler: src/handlers/users/sendFriendRequest.handler
+  events:
+    - http:
+        method: GET
+        path: /sendFriendRequest/{id}
+        cors: true
+
+acceptFriendRequest:
+  handler: src/handlers/users/acceptFriendRequest.handler
+  events:
+    - http:
+        method: GET
+        path: /acceptFriendRequest/{id}
+        cors: true
+
+removeFriend:
+  handler: src/handlers/users/removeFriend.handler
+  events:
+    - http:
+        method: GET
+        path: /removeFriend/{id}
+        cors: true

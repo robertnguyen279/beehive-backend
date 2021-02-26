@@ -22,6 +22,7 @@
     "@middy/http-error-handler": "^1.5.0",
     "@middy/http-event-normalizer": "^1.5.0",
     "@middy/http-security-headers": "^1.5.0",
+    "@types/lodash": "^4.14.168",
     "@types/mongoose": "^5.10.3",
     "@types/validator": "^13.1.2",
     "aws-lambda": "^1.0.6",
@@ -32,6 +33,7 @@
     "http-errors": "^1.8.0",
     "jsonwebtoken": "^8.5.1",
     "jwt-decode": "^3.1.2",
+    "lodash": "^4.17.21",
     "mongoose": "^5.11.8",
     "source-map-support": "^0.5.19",
     "validator": "^13.5.2"
