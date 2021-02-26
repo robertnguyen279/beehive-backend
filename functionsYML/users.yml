@@ -61,3 +61,11 @@ removeFriend:
         method: GET
         path: /removeFriend/{id}
         cors: true
+
+getUsers:
+  handler: src/handlers/users/getUsers.handler
+  events:
+    - http:
+        method: GET
+        path: /users
+        cors: true
